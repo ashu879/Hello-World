@@ -1,21 +1,17 @@
 function FindProxyForURL(url, host) {
-    // Normalize the URL for easier matching
+    // Normalize the host for consistent matching
     host = host.toLowerCase();
 
-    // Proxy specific sites
-    if (shExpMatch(host, "*.example.com")) {
-        return "PROXY proxy.example.com:8080";
+    // List of domains to bypass the proxy
+    var directSites = ["google.com", "facebook.com"];
+
+    // Check if the host matches any of the domains to bypass
+    for (var i = 0; i < directSites.length; i++) {
+        if (dnsDomainIs(host, directSites[i]) || shExpMatch(host, "*." + directSites[i])) {
+            return "DIRECT";
+        }
     }
 
-    // Direct access for localhost and local network
-    if ((host == "localhost") || 
-        (shExpMatch(host, "*.local")) || 
-        (isInNet(host, "10.0.0.0", "255.0.0.0")) ||
-        (isInNet(host, "172.16.0.0", "255.240.0.0")) ||
-        (isInNet(host, "192.168.0.0", "255.255.0.0"))) {
-        return "DIRECT";
-    }
-
-    // Default to a different proxy
-    return "PROXY proxy2.example.com:8080";
+    // Default to using the proxy for all other domains
+    return "PROXY proxyserver.example.com:8080";
 }
