@@ -11,15 +11,15 @@
 </head>
 <body>
     <h1>GlobalProtect SAML Test</h1>
-    <button onclick="openDuoApp()">Open Duo App</button>
+    <button onclick="openGPApp()">Open Gp App</button>
     <button onclick="simulateSamlAuth()">Simulate SAML Auth</button>
     <button onclick="simulateSamlLogout()">Simulate SAML Logout</button>
 
     <script>
-        function openDuoApp() {
-            window.location.href = "https://applink.gpcloudservice.com/globalprotectcallback/duo";
+        function openGPApp() {
+            window.location.href = "https://applink.gpcloudservice.com/globalprotectcallback/openapp";
         }
-
+        
         function simulateSamlAuth() {
             document.body.innerHTML += '<!--<saml-auth-status>1</saml-auth-status><saml-slo>yes</saml-slo>-->';
             Android.processHtmlPage(document.documentElement.outerHTML, document.body.lastChild.nodeValue, true);
